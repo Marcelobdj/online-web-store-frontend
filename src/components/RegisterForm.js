@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-const LoginForm = () => {
+const RegisterForm = () => {
     const [formData, setFormData] = useState({
+        name: "",
         email: "",
         password: "",
     });
@@ -23,26 +24,32 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // Authenticate the user and log in
-            const response = await axios.post("http://localhost:5000/api/users/login", formData);
-            const { token } = response.data;
-
-            // Save the JWT in the browser's local storage
-            localStorage.setItem("authToken", token);
-
-            console.log("User logged in successfully:", token);
+            const response = await axios.post("http://localhost:5000/api/users/register", formData);
+            if (response.status === 201) {
+                console.log("Registration successful");
+            }
         } catch (error) {
-            console.error("Error logging in:", error.response.data.message);
+            console.error("Error during registration:", error.response.data.message);
         }
     };
 
     return (
         <Container maxWidth="xs">
             <Typography variant="h4" align="center" gutterBottom>
-                Login
+                Register
             </Typography>
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            required
+                            name="name"
+                            label="Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                    </Grid>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
@@ -68,7 +75,7 @@ const LoginForm = () => {
                     <Grid item xs={12}>
                         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
                             <Button type="submit" variant="contained" color="primary">
-                                Login
+                                Register
                             </Button>
                         </Box>
                     </Grid>
@@ -78,4 +85,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

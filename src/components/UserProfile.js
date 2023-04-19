@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// frontend/src/components/UserProfile.js
+import React, { useState, useEffect } from "react";
 import {
     Container,
     Typography,
@@ -9,11 +10,33 @@ import {
 } from "@mui/material";
 import axios from "axios";
 
-const LoginForm = () => {
+const UserProfile = () => {
     const [formData, setFormData] = useState({
+        name: "",
         email: "",
         password: "",
     });
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
+                const response = await axios.get("http://localhost:5000/api/users/profile", config);
+                setFormData(response.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching profile:", error.response.data.message);
+            }
+        };
+
+        fetchProfile();
+    }, []);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -23,26 +46,40 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // Authenticate the user and log in
-            const response = await axios.post("http://localhost:5000/api/users/login", formData);
-            const { token } = response.data;
-
-            // Save the JWT in the browser's local storage
-            localStorage.setItem("authToken", token);
-
-            console.log("User logged in successfully:", token);
+            const token = localStorage.getItem("token");
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            const response = await axios.put("http://localhost:5000/api/users/profile", formData, config);
+            console.log("Profile updated:", response.data);
         } catch (error) {
-            console.error("Error logging in:", error.response.data.message);
+            console.error("Error updating profile:", error.response.data.message);
         }
     };
+
+    if (loading) {
+        return <Typography>Loading...</Typography>;
+    }
 
     return (
         <Container maxWidth="xs">
             <Typography variant="h4" align="center" gutterBottom>
-                Login
+                User Profile
             </Typography>
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            required
+                            name="name"
+                            label="Name"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                    </Grid>
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
@@ -57,18 +94,18 @@ const LoginForm = () => {
                     <Grid item xs={12}>
                         <TextField
                             fullWidth
-                            required
                             name="password"
                             label="Password"
                             type="password"
                             value={formData.password}
                             onChange={handleChange}
+                            helperText="Leave blank to keep the same password"
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
                             <Button type="submit" variant="contained" color="primary">
-                                Login
+                                Update Profile
                             </Button>
                         </Box>
                     </Grid>
@@ -78,4 +115,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default UserProfile;
