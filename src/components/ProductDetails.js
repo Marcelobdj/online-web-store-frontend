@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Box, Typography, Button, Container, Grid } from "@mui/material";
+import CartContext from "../context/CartContext";
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
+    const { dispatch } = useContext(CartContext);
+
+    const handleAddToCart = () => {
+        dispatch({ type: "ADD_TO_CART", payload: product });
+    };
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -48,8 +54,8 @@ const ProductDetails = () => {
                         <Button variant="contained" color="primary" sx={{ mr: 2 }}>
                             Add to Cart
                         </Button>
-                        <Button variant="outlined" color="primary">
-                            Back to Products
+                        <Button variant="contained" color="primary" sx={{ mr: 2 }} onClick={handleAddToCart}>
+                            Add to Cart
                         </Button>
                     </Box>
                 </Grid>

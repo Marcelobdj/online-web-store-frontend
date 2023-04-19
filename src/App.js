@@ -1,20 +1,30 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import HomePage from "./components/HomePage";
+import { CartProvider } from "./context/CartContext";
+import ShoppingCart from "./components/ShoppingCart";
 import ProductDetails from "./components/ProductDetails";
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <HomePage />
-        <Footer />
-      </div>
-    </Router>
+    <CartProvider>
+      <Router>
+        <div className="App">
+          <Navbar />
+          {/* Wrap the main content with Switch */}
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<ShoppingCart />} />
+            {/* Add more routes as you create the components */}
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </CartProvider>
   );
 }
 
