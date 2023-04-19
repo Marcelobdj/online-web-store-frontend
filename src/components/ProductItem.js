@@ -1,8 +1,15 @@
 import React from "react";
 import { Card, CardContent, CardMedia, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 
 const ProductItem = ({ product }) => {
+    const { addToCart } = useCart();
+
+    const handleAddToCart = () => {
+        addToCart(product);
+    };
+
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardMedia
@@ -22,7 +29,7 @@ const ProductItem = ({ product }) => {
                 </Typography>
                 <Typography variant="h6">${product.price}</Typography>
             </CardContent>
-            <Button variant="contained" color="primary" sx={{ m: 1 }}>
+            <Button variant="contained" color="primary" sx={{ m: 1 }} onClick={handleAddToCart}>
                 Add to Cart
             </Button>
         </Card>
