@@ -1,4 +1,3 @@
-// frontend/src/components/UserProfile.js
 import React, { useState, useEffect } from "react";
 import {
     Container,
@@ -7,8 +6,10 @@ import {
     Box,
     Button,
     Grid,
+    Divider,
 } from "@mui/material";
 import axios from "axios";
+import UserOrders from "./UserOrders";
 
 const UserProfile = () => {
     const [formData, setFormData] = useState({
@@ -64,7 +65,7 @@ const UserProfile = () => {
     }
 
     return (
-        <Container maxWidth="xs">
+        <Container>
             <Typography variant="h4" align="center" gutterBottom>
                 User Profile
             </Typography>
@@ -111,6 +112,8 @@ const UserProfile = () => {
                     </Grid>
                 </Grid>
             </form>
+            <Divider sx={{ my: 4 }} />
+            <UserOrders />
         </Container>
     );
 };

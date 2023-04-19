@@ -9,23 +9,13 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    IconButton,
-    Button,
     Box,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import CartItem from "./CartItem";
+import CartSummary from "./CartSummary";
 
 const ShoppingCart = () => {
     const { cartItems, dispatch } = useContext(CartContext);
-
-    const handleRemove = (id) => {
-        dispatch({ type: "REMOVE_FROM_CART", payload: id });
-    };
-
-    const getTotal = () => {
-        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-    };
 
     if (cartItems.length === 0) {
         return (
@@ -55,21 +45,12 @@ const ShoppingCart = () => {
                     </TableHead>
                     <TableBody>
                         {cartItems.map((item) => (
-                            <CartItem key={item.id} item={item} handleRemove={handleRemove} />
+                            <CartItem key={item.id} item={item} dispatch={dispatch} />
                         ))}
-                        <TableRow>
-                            <TableCell colSpan={3}>Total</TableCell>
-                            <TableCell>${getTotal().toFixed(2)}</TableCell>
-                            <TableCell />
-                        </TableRow>
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-                <Button variant="contained" color="primary">
-                    Checkout
-                </Button>
-            </Box>
+            <CartSummary />
         </Container>
     );
 };

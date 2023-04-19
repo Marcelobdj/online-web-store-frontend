@@ -51,9 +51,6 @@ const ProductDetails = () => {
                         {product.description}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Button variant="contained" color="primary" sx={{ mr: 2 }}>
-                            Add to Cart
-                        </Button>
                         <Button variant="contained" color="primary" sx={{ mr: 2 }} onClick={handleAddToCart}>
                             Add to Cart
                         </Button>
