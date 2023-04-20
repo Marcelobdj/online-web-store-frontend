@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import {
-    Container,
-    Typography,
-    TextField,
-    Box,
-    Button,
-    Grid,
-} from "@mui/material";
+import { Container, Typography, TextField, Box, Button, Grid } from "@mui/material";
 import axios from "axios";
-import { useTheme } from '@mui/system';
+import { useTheme } from "@mui/system";
 import Alert from "@mui/material/Alert";
 
 const RegisterForm = () => {
@@ -41,14 +34,14 @@ const RegisterForm = () => {
     return (
         <Container maxWidth="xs">
             <Typography variant="h4" align="center" gutterBottom style={{ color: theme.palette.text.primary }}>
-                {message && (
-                    <Alert severity={message.type} sx={{ my: 2 }}>
-                        {message.text}
-                    </Alert>
-                )}
                 Register
             </Typography>
-            {message && message.type !== "success" && (
+            {message && (
+                <Alert severity={message.type} sx={{ my: 2 }}>
+                    {message.text}
+                </Alert>
+            )}
+            {!message || message.type !== "success" ? (
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -92,7 +85,7 @@ const RegisterForm = () => {
                         </Grid>
                     </Grid>
                 </form>
-            )}
+            ) : null}
         </Container>
     );
 };

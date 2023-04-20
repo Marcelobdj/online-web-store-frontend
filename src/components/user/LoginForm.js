@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import {
-    Container,
-    Typography,
-    TextField,
-    Box,
-    Button,
-    Grid,
-} from "@mui/material";
+import { Container, Typography, TextField, Box, Button, Grid } from "@mui/material";
 import axios from "axios";
-import { useTheme } from '@mui/system';
+import { useTheme } from "@mui/system";
 import Alert from "@mui/material/Alert";
 
 const LoginForm = () => {
@@ -28,30 +21,26 @@ const LoginForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            // Authenticate the user and log in
             const response = await axios.post("http://localhost:5000/api/users/login", formData);
-            const { token } = response.data;
-
-            // Save the JWT in the browser's local storage
-            localStorage.setItem("authToken", token);
-
-            setMessage({ type: "success", text: "User logged in successfully!" });
+            if (response.status === 200) {
+                setMessage({ type: "success", text: "Login successful!" });
+            }
         } catch (error) {
-            setMessage({ type: "error", text: `Error logging in: ${error.response.data.message}` });
+            setMessage({ type: "error", text: `Error during login: ${error.response.data.message}` });
         }
     };
 
     return (
         <Container maxWidth="xs">
             <Typography variant="h4" align="center" gutterBottom style={{ color: theme.palette.text.primary }}>
-                {message && (
-                    <Alert severity={message.type} sx={{ my: 2 }}>
-                        {message.text}
-                    </Alert>
-                )}
                 Login
             </Typography>
-            {message && message.type !== "success" && (
+            {message && (
+                <Alert severity={message.type} sx={{ my: 2 }}>
+                    {message.text}
+                </Alert>
+            )}
+            {!message || message.type !== "success" ? (
                 <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -85,7 +74,7 @@ const LoginForm = () => {
                         </Grid>
                     </Grid>
                 </form>
-            )}
+            ) : null}
         </Container>
     );
 };
