@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import CartContext from "../context/CartContext";
+import CartContext from "../../context/CartContext";
 import { Link } from "react-router-dom";
 
 const CartSummary = () => {
@@ -16,7 +16,6 @@ const CartSummary = () => {
                 Total: ${calculateTotal().toFixed(2)}
             </Typography>
             <Button
-                component={Link}
                 to="/checkout"
                 variant="contained"
                 color="primary"

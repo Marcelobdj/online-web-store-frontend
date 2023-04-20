@@ -1,6 +1,9 @@
-// frontend/src/components/AdminPanel.js
 import React, { useState } from "react";
 import { Container, Typography, Box, Button, Grid, Paper } from "@mui/material";
+import AdminUserList from "./AdminUserList";
+import AdminProductList from "./AdminProductList";
+import AdminOrderList from "./AdminOrderList";
+import AddProduct from "./AddProduct";
 
 const AdminPanel = () => {
     const [showAddProduct, setShowAddProduct] = useState(false);
@@ -22,7 +25,7 @@ const AdminPanel = () => {
             {showAddProduct && (
                 <Grid container spacing={2} sx={{ mt: 2 }}>
                     <Grid item xs={12}>
-                        {/* Include the AddProduct component here */}
+                        <AddProduct />
                     </Grid>
                     <Grid item xs={12}>
                         <Button variant="contained" color="primary">
@@ -31,24 +34,9 @@ const AdminPanel = () => {
                     </Grid>
                 </Grid>
             )}
-            <Grid container spacing={2} sx={{ mt: 2 }}>
-                {/* Render a list of products with edit and delete buttons */}
-                <Grid item xs={12} md={4}>
-                    <Paper elevation={2} sx={{ p: 2 }}>
-                        <Typography variant="h6">Product Name</Typography>
-                        <Typography>Price: $100</Typography>
-                        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-                            <Button variant="contained" color="primary" sx={{ mr: 1 }}>
-                                Edit
-                            </Button>
-                            <Button variant="contained" color="error">
-                                Delete
-                            </Button>
-                        </Box>
-                    </Paper>
-                </Grid>
-                {/* Add more product cards */}
-            </Grid>
+            <AdminUserList />
+            <AdminProductList />
+            <AdminOrderList />
         </Container>
     );
 };

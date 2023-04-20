@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Box, Typography, Button, Container, Grid } from "@mui/material";
-import CartContext from "../context/CartContext";
+import CartContext from "../../context/CartContext";
 
 const ProductDetails = () => {
     const { id } = useParams();

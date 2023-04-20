@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, CardContent, CardMedia, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../../context/CartContext";
+import { useTheme } from '@mui/system';
 
 const ProductItem = ({ product }) => {
     const { addToCart } = useCart();
@@ -9,6 +10,8 @@ const ProductItem = ({ product }) => {
     const handleAddToCart = () => {
         addToCart(product);
     };
+
+    const theme = useTheme();
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -19,7 +22,7 @@ const ProductItem = ({ product }) => {
                 alt={product.name}
             />
             <CardContent>
-                <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
+                <Link to={`/products/${product._id}`} style={{ textDecoration: "none", color: theme.palette.text.primary }} onMouseEnter={(e) => { e.target.style.textDecoration = 'underline'; }} onMouseLeave={(e) => { e.target.style.textDecoration = 'none'; }} >
                     <Typography gutterBottom variant="h5" component="div">
                         {product.name}
                     </Typography>
