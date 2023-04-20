@@ -10,9 +10,10 @@ import ShoppingCart from "./components/user/ShoppingCart";
 import CheckoutForm from "./components/user/CheckoutForm";
 import LoginForm from "./components/user/LoginForm";
 import RegisterForm from "./components/user/RegisterForm";
-import UserProfile from "./components/user/UserProfile";
+import MyProfile from "./components/user/MyProfile";
 import AdminPanel from "./components/admin/AdminPanel";
 import { CartProvider } from "./context/CartContext";
+import { UserProvider } from "./context/UserContext";
 import withAuthorization from "./components/common/withAuthorization";
 import { ThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './themes/theme';
@@ -27,34 +28,37 @@ function App() {
     setDarkMode(!darkMode);
   };
   return (
-    <CartProvider>
-      <Router>
-        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-          <div className="App">
-            <Navbar />
-            <IconButton color="inherit" onClick={toggleDarkMode}>
-              <Brightness4Icon />
-            </IconButton>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/products" element={<ProductList />} />
-              <Route path="/products/:id" element={<ProductDetails />} />
-              <Route path="/cart" element={<ShoppingCart />} />
-              <Route path="/checkout" element={<CheckoutForm />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/profile" element={<UserProfile />} />
-              <Route
-                path="/admin"
-                element={withAuthorization(AdminPanel, ["admin"])}
-              />
-              {/* Add more routes as you create the components */}
-            </Routes>
-            <Footer />
-          </div>
-        </ThemeProvider>
-      </Router>
-    </CartProvider>
+    <UserProvider>
+      <CartProvider>
+        <Router>
+          <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+            <div className="App">
+              <Navbar />
+              <IconButton color="inherit" onClick={toggleDarkMode}>
+                <Brightness4Icon />
+              </IconButton>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/products" element={<ProductList />} />
+                <Route path="/products/:id" element={<ProductDetails />} />
+                <Route path="/cart" element={<ShoppingCart />} />
+                <Route path="/checkout" element={<CheckoutForm />} />
+                <Route path="/login" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
+                <Route path="/profile" element={<MyProfile />} />
+                <Route
+                  path="/admin"
+                  element={withAuthorization(AdminPanel, ["admin"])}
+                />
+                <Route path="/profile" element={<MyProfile />} />
+                {/* Add more routes as you create the components */}
+              </Routes>
+              <Footer />
+            </div>
+          </ThemeProvider>
+        </Router>
+      </CartProvider>
+    </UserProvider>
   );
 }
 
