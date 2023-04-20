@@ -7,6 +7,7 @@ import {
     Button,
     Grid,
 } from "@mui/material";
+import { useTheme } from '@mui/system';
 
 const CheckoutForm = () => {
     const [formData, setFormData] = useState({
@@ -30,9 +31,11 @@ const CheckoutForm = () => {
         console.log("Form Data:", formData);
     };
 
+    const theme = useTheme();
+
     return (
         <Container>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom style={{ color: theme.palette.text.primary }}>
                 Checkout
             </Typography>
             <form onSubmit={handleSubmit}>
@@ -110,7 +113,7 @@ const CheckoutForm = () => {
                     </Grid>
                     <Grid item xs={12}>
                         {/* You can replace this with an actual payment processing component */}
-                        <Typography variant="subtitle1">Payment Details (To be implemented)</Typography>
+                        <Typography variant="subtitle1" style={{ color: theme.palette.text.primary }}>Payment Details (To be implemented)</Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>

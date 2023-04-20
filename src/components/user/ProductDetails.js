@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Box, Typography, Button, Container, Grid } from "@mui/material";
 import CartContext from "../../context/CartContext";
+import { useTheme } from '@mui/system';
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const { dispatch } = useContext(CartContext);
+    const theme = useTheme();
 
     const handleAddToCart = () => {
         dispatch({ type: "ADD_TO_CART", payload: product });
@@ -41,13 +43,13 @@ const ProductDetails = () => {
                     />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <Typography variant="h4" gutterBottom>
+                    <Typography variant="h4" gutterBottom style={{ color: theme.palette.text.primary }}>
                         {product.name}
                     </Typography>
-                    <Typography variant="h6" color="text.secondary" gutterBottom>
+                    <Typography variant="h6" color={theme.palette.text.secondary} gutterBottom>
                         ${product.price}
                     </Typography>
-                    <Typography variant="body1" paragraph>
+                    <Typography variant="body1" paragraph style={{ color: theme.palette.text.primary }}>
                         {product.description}
                     </Typography>
                     <Box sx={{ display: "flex", alignItems: "center" }}>

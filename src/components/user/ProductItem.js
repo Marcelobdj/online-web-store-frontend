@@ -27,7 +27,7 @@ const ProductItem = ({ product }) => {
                         {product.name}
                     </Typography>
                 </Link>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color={theme.palette.text.secondary}>
                     {product.description}
                 </Typography>
                 <Typography variant="h6">${product.price}</Typography>

@@ -22,9 +22,9 @@ const ProductList = () => {
     }, []);
 
     return (
-        <Grid container spacing={2} style={{color: theme.palette.text.primary,}}>
+        <Grid container spacing={2} style={{ color: theme.palette.text.primary }}>
             {products.map((product) => (
-                <Grid item xs={12} sm={6} md={4} key={product._id} style={{color: theme.palette.text.primary,}}>
+                <Grid item xs={12} sm={6} md={4} key={product._id}>
                     <ProductItem product={product} />
                 </Grid>
             ))}

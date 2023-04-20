@@ -15,14 +15,15 @@ const CartSummary = () => {
             <Typography variant="h6" gutterBottom>
                 Total: ${calculateTotal().toFixed(2)}
             </Typography>
-            <Button
-                to="/checkout"
-                variant="contained"
-                color="primary"
-                disabled={cartItems.length === 0}
-            >
-                Proceed to Checkout
-            </Button>
+            <Link to="/checkout" style={{ textDecoration: "none" }}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={cartItems.length === 0}
+                >
+                    Proceed to Checkout
+                </Button>
+            </Link>
         </Box>
     );
 };

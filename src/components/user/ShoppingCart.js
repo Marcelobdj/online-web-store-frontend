@@ -9,18 +9,19 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    Box,
 } from "@mui/material";
 import CartItem from "./CartItem";
 import CartSummary from "./CartSummary";
+import { useTheme } from '@mui/system';
 
 const ShoppingCart = () => {
     const { cartItems, dispatch } = useContext(CartContext);
+    const theme = useTheme();
 
     if (cartItems.length === 0) {
         return (
             <Container>
-                <Typography variant="h4" gutterBottom>
+                <Typography variant="h4" gutterBottom style={{ color: theme.palette.text.primary }}>
                     Your Shopping Cart is Empty
                 </Typography>
             </Container>
@@ -29,7 +30,7 @@ const ShoppingCart = () => {
 
     return (
         <Container>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom style={{ color: theme.palette.text.primary }}>
                 Shopping Cart
             </Typography>
             <TableContainer>

@@ -10,8 +10,11 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import UserOrders from "./UserOrders";
+import { useTheme } from '@mui/system';
 
 const UserProfile = () => {
+    const theme = useTheme();
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -66,7 +69,7 @@ const UserProfile = () => {
 
     return (
         <Container>
-            <Typography variant="h4" align="center" gutterBottom>
+            <Typography variant="h4" align="center" gutterBottom style={{ color: theme.palette.text.primary }}>
                 User Profile
             </Typography>
             <form onSubmit={handleSubmit}>
