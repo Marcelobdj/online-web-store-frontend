@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Container, Typography, TextField, Box, Button, Grid } from "@mui/material";
 import axios from "axios";
 import { useTheme } from "@mui/system";
 import Alert from "@mui/material/Alert";
+import { UserContext } from "../../context/UserContext"; // Add this import
+import { useNavigate } from "react-router-dom"; // Update this import
 
 const LoginForm = () => {
     const theme = useTheme();
+    const navigate = useNavigate(); // Update this line
+    const { login } = useContext(UserContext); // Add this line
     const [message, setMessage] = useState(null);
 
     const [formData, setFormData] = useState({
@@ -18,15 +22,16 @@ const LoginForm = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const { email, password } = formData;
         try {
-            const response = await axios.post("http://localhost:5000/api/users/login", formData);
-            if (response.status === 200) {
-                setMessage({ type: "success", text: "Login successful!" });
-            }
+            await login(email, password);
+            alert("Login successful");
+            navigate("/");
         } catch (error) {
-            setMessage({ type: "error", text: `Error during login: ${error.response.data.message}` });
+            console.error(error); // Add this line to log the error
+            alert("Login failed");
         }
     };
 

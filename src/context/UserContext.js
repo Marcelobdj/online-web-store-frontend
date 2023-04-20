@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await axios.post("/api/users/login", { email, password });
+            const response = await axios.post('http://localhost:5000/api/users/login', { email, password });
             setUser(response.data);
             localStorage.setItem("user", JSON.stringify(response.data));
         } catch (error) {
@@ -23,6 +23,7 @@ export const UserProvider = ({ children }) => {
             throw error;
         }
     };
+
 
     const logout = () => {
         setUser(null);
